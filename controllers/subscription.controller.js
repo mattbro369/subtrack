@@ -13,6 +13,19 @@ export const createSubscription = async (req, res, next) => {
   }
 };
 
+export const getSubscriptions = async (req, res, next) => {
+  try {
+    const subscriptions = await Subscription.find();
+    res.status(200).json({
+      success: true,
+      message: "All subscriptions retrieved successfully",
+      data: subscriptions,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getUserSubscriptions = async (req, res, next) => {
   try {
     if (req.user._id.toString() !== req.params.id) {
@@ -29,15 +42,31 @@ export const getUserSubscriptions = async (req, res, next) => {
   }
 };
 
-export const getSubscriptions = async (req, res, next) => {
+export const getSubscriptionDetails = async (req, res) => {
   try {
-    const subscriptions = await Subscription.find();
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const subscription = await Subscription.findOne({
+      _id: id,
+      user: userId,
+    });
+
+    if (!subscription) {
+      return res.status(404).json({
+        success: false,
+        message: "Subscription not found",
+      });
+    }
+
     res.status(200).json({
       success: true,
-      message: "All subscriptions retrieved successfully",
-      data: subscriptions,
+      data: subscription,
     });
   } catch (error) {
-    next(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
