@@ -28,3 +28,16 @@ export const getUserSubscriptions = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getSubscriptions = async (req, res, next) => {
+  try {
+    const subscriptions = await Subscription.find();
+    res.status(200).json({
+      success: true,
+      message: "All subscriptions retrieved successfully",
+      data: subscriptions,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
