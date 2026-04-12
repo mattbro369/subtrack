@@ -15,21 +15,21 @@ subscriptionRouter.get("/:id", authorize, getSubscriptionDetails);
 
 subscriptionRouter.post("/", authorize, createSubscription);
 
-subscriptionRouter.put("/:id", (req, res) =>
+subscriptionRouter.put("/:id", (res) =>
   res.send({ title: "Update subscription" }),
 );
 
-subscriptionRouter.delete("/:id", (req, res) =>
+subscriptionRouter.delete("/:id", (res) =>
   res.send({ title: "Delete subscription" }),
 );
 
 subscriptionRouter.get("/user/:id", authorize, getUserSubscriptions);
 
-subscriptionRouter.put("/:id/cancel", (req, res) =>
+subscriptionRouter.put("/:id/cancel", (res) =>
   res.send({ title: "Cancel subscription" }),
 );
 
-subscriptionRouter.get("/upcoming-renewals", (req, res) =>
+subscriptionRouter.get("/upcoming-renewals", (res) =>
   res.send({ title: "Get upcoming renewals" }),
 );
 
